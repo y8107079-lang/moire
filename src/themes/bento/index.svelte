@@ -37,7 +37,16 @@
         ></div>
         <div class="relative z-10 flex h-full flex-col">
           <div
-            class="prose prose-slate prose-p:text-slate-700 prose-headings:text-slate-800 prose-a:text-blue-600 prose-strong:text-slate-900 mb-6 line-clamp-[12] text-[0.95rem] leading-relaxed tracking-wide"
+            class="prose prose-slate prose-p:text-slate-700 prose-headings:text-slate-800 prose-a:text-blue-600 prose-strong:text-slate-900 mb-6 line-clamp-[12] text-[0.95rem] leading-relaxed tracking-wide
+                   [&_.tag-link]:rounded-full [&_.tag-link]:px-2 [&_.tag-link]:py-0.5 [&_.tag-link]:text-[10px] [&_.tag-link]:font-medium [&_.tag-link]:tracking-wide [&_.tag-link]:transition-colors [&_.tag-link]:bg-slate-100 [&_.tag-link]:text-slate-500 [&_.tag-link:hover]:bg-slate-200 [&_.tag-link:hover]:text-slate-700 [&_.tag-link]:no-underline [&_.tag-link]:mx-0.5"
+             onclick={(e) => {
+                const target = e.target as HTMLElement;
+                if (target.classList.contains('tag-link')) {
+                    e.stopPropagation(); 
+                    const tag = target.dataset.tag;
+                    if (tag) memoList.selectTag(tag);
+                }
+             }}
           >
             {@html marked.parse(memo.content)}
           </div>
@@ -46,24 +55,6 @@
             class="mt-auto flex items-center justify-between pt-4 text-xs font-semibold tracking-wide text-slate-400/80 uppercase"
           >
             <span>{format(new Date(memo.date), 'MMM d, yyyy')}</span>
-            <div class="flex flex-wrap justify-end gap-1.5 transition-opacity duration-300 group-hover:opacity-100">
-              {#if memo.tags}
-                {#each memo.tags as tag}
-                  <button
-                    onclick={(e) => {
-                      e.stopPropagation();
-                      memoList.selectTag(tag);
-                    }}
-                    class="rounded-full px-2 py-0.5 text-[10px] font-medium tracking-wide transition-colors
-                                            {memoList.selectedTag === tag
-                      ? 'bg-blue-500 text-white shadow-md'
-                      : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700'}"
-                  >
-                    #{tag}
-                  </button>
-                {/each}
-              {/if}
-            </div>
           </div>
         </div>
       </div>

@@ -7,14 +7,12 @@
   const memoList = createMemoList(() => data, config);
 </script>
 
-<div class="min-h-screen bg-[var(--bg-color)] text-[var(--text-color)] p-5 md:p-10 {config.theme}">
-  <!-- Paper texture -->
+<div class="max-w-4xl mx-auto min-h-screen bg-[var(--bg-color)] text-[var(--text-color)] p-5 md:p-10 {config.theme}">
   <div
     class="fixed inset-0 pointer-events-none opacity-40 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2ZmZiIvPjxmaWx0ZXIgaWQ9Im4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjUiIG51bU9jdGF2ZXM9IjUiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==')] z-0"
   ></div>
 
-  <div class="max-w-6xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-12 gap-12">
-    <!-- Sidebar / Sidenotes -->
+  <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-12">
     <aside class="md:col-span-3 md:border-r border-[#333]/10 md:pr-8 md:text-right">
       <header class="sticky top-10">
         <h1 class="text-3xl font-bold italic mb-4 text-[var(--accent-color)]">{config.title}</h1>
@@ -39,7 +37,7 @@
           <p class="text-xs font-bold uppercase tracking-wider text-[#999] mb-4">Index</p>
           <ul class="text-sm space-y-2">
             {#each memoList.allTags as tag}
-              <li>
+              <li class="list-none">
                 <button
                   class="hover:text-[var(--accent-color)] hover:underline decoration-[var(--accent-color)]/30 underline-offset-4 transition-colors {memoList.selectedTag ===
                   tag
@@ -56,7 +54,6 @@
       </header>
     </aside>
 
-    <!-- Main Content (Manuscript) -->
     <main class="md:col-span-9 space-y-16 max-w-2xl">
       {#each Object.entries(memoList.groupedMemos) as [dateKey, memos]}
         <section>
@@ -70,7 +67,6 @@
           <div class="space-y-12">
             {#each memos as memo}
               <article class="group relative">
-                <!-- Marginalia / Sidenote for time -->
                 <div class="absolute -left-16 top-1 hidden xl:block text-xs font-mono text-[#999] w-12 text-right">
                   {format(memo.date, 'HH:mm')}
                 </div>
@@ -82,25 +78,20 @@
                 <div
                   class="prose prose-stone prose-lg max-w-none
                                     text-[var(--text-color)] leading-relaxed
+                                    [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5
                                     prose-p:mb-4 prose-headings:font-normal prose-headings:italic prose-a:text-[var(--accent-color)] prose-a:no-underline prose-a:border-b prose-a:border-[var(--accent-color)]/30 hover:prose-a:border-[var(--accent-color)] hover:prose-a:bg-[var(--accent-color)]/5
                                     prose-blockquote:border-l-2 prose-blockquote:border-[var(--accent-color)] prose-blockquote:bg-[#f9f2f4] prose-blockquote:py-1 prose-blockquote:px-4 prose-blockquote:not-italic prose-blockquote:text-sm prose-blockquote:text-[#555]
-                                    [&_img]:shadow-lg [&_img]:rounded-sm [&_img]:border-[4px] [&_img]:border-white [&_img]:rotate-1 group-hover:[&_img]:rotate-0 [&_img]:transition-transform [&_img]:duration-500"
+                                    [&_img]:shadow-lg [&_img]:rounded-sm [&_img]:border-[4px] [&_img]:border-white [&_img]:rotate-1 group-hover:[&_img]:rotate-0 [&_img]:transition-transform [&_img]:duration-500
+                                    [&_.tag-link]:text-xs [&_.tag-link]:text-[#999] [&_.tag-link:hover]:text-[var(--accent-color)] [&_.tag-link:hover]:underline [&_.tag-link]:no-underline"
+                  onclick={(e) => {
+                      const target = e.target as HTMLElement;
+                      if (target.classList.contains('tag-link')) {
+                          const tag = target.dataset.tag;
+                          if (tag) memoList.selectTag(tag);
+                      }
+                  }}
                 >
-                  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                   {@html memo.content}
-                </div>
-
-                <div
-                  class="mt-4 flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                >
-                  {#each memo.tags || [] as tag}
-                    <button
-                      class="text-xs text-[#999] hover:text-[var(--accent-color)] hover:underline"
-                      onclick={() => memoList.selectTag(tag)}
-                    >
-                      #{tag}
-                    </button>
-                  {/each}
                 </div>
               </article>
             {/each}

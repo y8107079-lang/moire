@@ -104,22 +104,17 @@
         </header>
 
         <div
-          class="prose prose-invert prose-p:text-[var(--text-color)]/90 prose-headings:text-[var(--text-color)] prose-a:text-[var(--accent-color)] prose-strong:text-white prose-code:text-[var(--accent-color)] prose-code:bg-[var(--accent-color)]/10 max-w-none text-lg leading-relaxed"
+          class="prose prose-invert prose-p:text-[var(--text-color)]/90 prose-headings:text-[var(--text-color)] prose-a:text-[var(--accent-color)] prose-strong:text-white prose-code:text-[var(--accent-color)] prose-code:bg-[var(--accent-color)]/10 max-w-none text-lg leading-relaxed
+                 [&_.tag-link]:inline-block [&_.tag-link]:px-2 [&_.tag-link]:py-0.5 [&_.tag-link]:border [&_.tag-link]:border-[var(--text-color)]/30 [&_.tag-link]:text-[10px] [&_.tag-link]:tracking-widest [&_.tag-link]:uppercase [&_.tag-link]:text-[var(--text-color)]/60 [&_.tag-link:hover]:bg-[var(--text-color)] [&_.tag-link:hover]:text-[var(--bg-color)] [&_.tag-link]:transition-colors [&_.tag-link]:cursor-pointer [&_.tag-link]:no-underline"
+          onclick={(e) => {
+             const target = e.target as HTMLElement;
+             if (target.classList.contains('tag-link')) {
+                 const tag = target.dataset.tag;
+                 if (tag) memoList.selectTag(tag);
+             }
+          }}
         >
           {@html marked.parse(memo.content)}
-        </div>
-
-        <div class="mt-6 flex flex-wrap gap-2">
-          {#if memo.tags}
-            {#each memo.tags as tag}
-              <span
-                class="px-2 py-0.5 border border-[var(--text-color)]/30 text-[10px] tracking-widest uppercase text-[var(--text-color)]/60 hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-colors cursor-pointer"
-                onclick={() => memoList.selectTag(tag)}
-              >
-                [{tag}]
-              </span>
-            {/each}
-          {/if}
         </div>
       </article>
     {/each}

@@ -2,6 +2,7 @@
 import type { PageServerLoad } from './$types';
 import { marked } from 'marked';
 import { config } from '../../moire.config';
+import { normalizeUtcOffset } from '$lib/utils';
 
 type Memo = {
   slug: string;
@@ -55,7 +56,7 @@ export const load: PageServerLoad = async () => {
 
       processedMarkdown = processedMarkdown.replace(
         /(^|\s)#([^\s#.,!?;:()\[\]"']+)/g,
-        '$1<button class="bg-transparent border-none p-0 font-bold text-black cursor-pointer underline hover:text-gray-600 transition-colors" data-tag="$2">#$2</button>'
+        '$1<button class="tag-link" data-tag="$2">#$2</button>'
       );
 
       const htmlContent = await marked.parse(processedMarkdown);
@@ -70,7 +71,9 @@ export const load: PageServerLoad = async () => {
         const minute = match[5];
         const second = match[6];
 
-        const isoString = `${ year }-${ month }-${ day }T${ hour }:${ minute }:${ second }${ config.utcOffset }`;
+        // ... inside the loop
+        const utcOffset = normalizeUtcOffset(config.utcOffset);
+        const isoString = `${ year }-${ month }-${ day }T${ hour }:${ minute }:${ second }${ utcOffset }`;
         date = new Date(isoString);
       }
 

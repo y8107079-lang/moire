@@ -1,15 +1,8 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
 
 @font-face {
   font-family: 'zpix';
   src: url('https://static.aeriszhu.com/zpix.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'huiwen-mincho';
-  src: url('https://static.aeriszhu.com/huiwen-mincho.ttf') format('truetype');
   font-display: swap;
 }
 
@@ -19,19 +12,18 @@ body.receipt {
   --card-bg: #fffefe;
   --font-family: 'zpix', monospace;
 }
-  
+
 body.cyberpunk {
   --bg-color: #000000;
   --text-color: #eab662;
-    --accent-color: #9bebc6;
-    --font-family: 'Rajdhani', sans-serif;
-  }
-  
-  body.academic {
-    --bg-color: #fdf6e3;
-    --text-color: #333333;
-    --accent-color: #d33682;
-    --font-family: 'huiwen-mincho', "Songti SC", "STSong", "SimSun", "PMingLiU", serif;
+  --accent-color: #9bebc6;
+}
+
+body.academic {
+  --bg-color: #fdf6e3;
+  --text-color: #333333;
+  --accent-color: #d33682;
+  --font-family: "Songti SC", "STSong", "SimSun", "PMingLiU", serif;
   }
 
 body.bento {
@@ -58,4 +50,15 @@ body {
   font-family: var(--font-family);
   line-height: 1.4;
   -webkit-font-smoothing: antialiased;
+}
+ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
 }

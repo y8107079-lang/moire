@@ -73,7 +73,15 @@
                         prose-a:text-[var(--accent-color)] prose-a:font-bold prose-a:no-underline hover:prose-a:underline
                         prose-strong:text-[var(--accent-color)]
                         prose-code:bg-[var(--bg-color)] prose-code:text-[var(--accent-color)] prose-code:px-1 prose-code:border prose-code:border-[var(--text-color)]/20
-                        prose-blockquote:border-l-4 prose-blockquote:border-[#859900] prose-blockquote:bg-[#f9f2f4] prose-blockquote:text-[#657b83]"
+                        prose-blockquote:border-l-4 prose-blockquote:border-[#859900] prose-blockquote:bg-[#f9f2f4] prose-blockquote:text-[#657b83]
+                        [&_.tag-link]:bg-[var(--accent-color)] [&_.tag-link]:text-white [&_.tag-link]:px-1 [&_.tag-link]:border [&_.tag-link]:border-[var(--border-color)] [&_.tag-link]:shadow-[1px_1px_0_0_var(--border-color)] [&_.tag-link]:text-[10px] [&_.tag-link]:no-underline [&_.tag-link]:mx-0.5"
+             onclick={(e) => {
+                const target = e.target as HTMLElement;
+                if (target.classList.contains('tag-link')) {
+                    const tag = target.dataset.tag;
+                    if (tag) memoList.selectTag(tag);
+                }
+             }}
           >
             {@html marked.parse(memo.content)}
           </div>
@@ -83,16 +91,6 @@
           class="mt-auto border-t-2 border-[var(--border-color)] bg-[var(--bg-color)] px-2 py-1 text-[10px] text-[var(--text-color)] flex justify-between items-center"
         >
           <span class="font-bold text-[var(--accent-color)]">{format(new Date(memo.date), 'HH:mm:ss')}</span>
-          <div class="flex flex-wrap gap-1 justify-end">
-            {#if memo.tags}
-              {#each memo.tags as tag}
-                <span
-                  class="bg-[var(--accent-color)] text-white px-1 border border-[var(--border-color)] shadow-[1px_1px_0_0_var(--border-color)]"
-                  >#{tag}</span
-                >
-              {/each}
-            {/if}
-          </div>
         </div>
 
         <div

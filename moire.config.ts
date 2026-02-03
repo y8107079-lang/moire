@@ -3,7 +3,7 @@ export const config = {
   author: "Aeris",
   theme: "receipt",
   pageSize: 20,
-  utcOffset: "-06:00",
+  utcOffset: 8,
   description: "Sync your thoughts from Apple Notes by iOS Shortcuts to the memo log site.",
   keywords: "memo, thought, sync, apple notes, shortcuts, ios",
   links: [

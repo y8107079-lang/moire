@@ -8,9 +8,7 @@
   const memoList = createMemoList(() => data, config);
 </script>
 
-<div
-  class="flex justify-center sm:m-10 min-h-screen {config.theme}"
->
+<div class="flex justify-center sm:m-10 min-h-screen {config.theme}">
   <div
     class="w-full max-w-[540px] bg-[var(--card-bg)] pt-8 px-3 sm:p-5 shadow-[0_0_10px_rgba(0,0,0,0.1)] relative drop-shadow-[0px_2px_4px_rgba(0,0,0,0.1)] border-y border-dashed border-[#ccc]"
   >
@@ -66,9 +64,10 @@
                 </div>
               </div>
               <div
-                class="flex-1 text-[0.95rem] [&_h1]:text-base [&_h1]:uppercase [&_h1]:mb-1.5 [&_p]:mb-2.5 [&_ul]:pl-4 [&_ul]:mb-2.5 [&_ol]:pl-4 [&_ol]:mb-2.5 [&_img]:grayscale [&_img]:contrast-120 [&_img]:max-w-full [&_img]:my-1.5 [&_img]:border-2 [&_img]:border-black"
+                class="flex-1 text-[0.95rem] [&_h1]:text-base [&_h1]:uppercase [&_h1]:mb-1.5 [&_p]:mb-2.5 [&_img]:grayscale [&_img]:contrast-120 [&_img]:max-w-full [&_img]:my-1.5 [&_img]:border-2 [&_img]:border-black
+                  [&_.tag-link]:bg-transparent [&_.tag-link]:font-bold [&_.tag-link]:underline [&_.tag-link]:decoration-dashed [&_.tag-link]:underline-offset-3 [&_.tag-link]:hover:bg-black [&_.tag-link]:hover:text-white
+                "
               >
-                <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                 {@html memo.content}
               </div>
             </div>
